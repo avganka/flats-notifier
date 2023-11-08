@@ -45,7 +45,7 @@ export async function getNewFlats() {
         const text = `${title} - ${subway}\n${url}`;
         await bot.api.sendMessage(process.env.TELEGRAM_ID as string, text);
       } catch (error) {
-        console.log(flat);
+        console.log(error);
       }
     }
   }

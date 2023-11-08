@@ -1,18 +1,22 @@
 {
-  "name": "avito-notify",
-  "version": "1.0.0",
+  "name": "flats-notifier",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.ts",
-    "start:prod": "npm run build && nodemon ./dist/src/index.js",
     "build": "npx tsc",
     "scrape": "ts-node ./src/services/scrape.ts",
     "clear": "rm -rf tmp && rm -rf dist",
     "bot": "ts-node ./src/services/telegram.ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "flats",
+    "avito",
+    "realty",
+    "scrape"
+  ],
+  "author": "Alex Kalmuk <sasha.kalmuk@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.16",

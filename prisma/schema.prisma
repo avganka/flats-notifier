@@ -10,12 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model AvitoFlat {
-  id        String   @id
-  title     String
-  url       String
-  img       String
-  subway    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Flat {
+  id           String   @id
+  host         String   @default("")
+  title        String   @default("")
+  url          String   @default("")
+  img          String   @default("")
+  subway       String   @default("")
+  price        String   @default("")
+  address      String   @default("")
+  comission    String   @default("")
+  timeToSubway String   @default("")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

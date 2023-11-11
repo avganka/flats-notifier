@@ -4,8 +4,8 @@ import notifyRouter from './routes/notify.router';
 import errorHandler from './middlewares/errorHandler';
 import cors from 'cors';
 
-import { bot } from './services/telegram';
-import { prisma } from './services/prisma';
+import { bot } from './core/telegram';
+import { prisma } from './core/prisma';
 
 dotenv.config();
 

@@ -31,7 +31,7 @@
     "valid-jsdoc": 2,
 
     "complexity": ["error", { "max": 10 }],
-    "consistent-return": 2,
+    "consistent-return": 0,
     "curly": 2,
     "default-case": 2,
     "dot-notation": 2,

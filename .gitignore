@@ -21,3 +21,6 @@ dist-ssr
 tmp
 
 .env*
+
+prisma/migrations*
+prisma/dev.db

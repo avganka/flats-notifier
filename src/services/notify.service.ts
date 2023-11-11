@@ -10,7 +10,7 @@ import { AvitoScrapperService } from './avito.service';
 
 export async function getNewFlats() {
   const avitoScrapeService = new AvitoScrapperService({
-    headless: false,
+    headless: 'new',
     viewport: {
       width: 1200,
       height: 800,

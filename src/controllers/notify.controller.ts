@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getNewFlats } from 'services/getNewFlats';
+import { getNewFlats } from '../services/notify.service';
 
 export async function findNewFlats(req: Request, res: Response, next: NextFunction) {
   try {

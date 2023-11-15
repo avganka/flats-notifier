@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import { bot } from './core/telegram';
 import { prisma } from './core/prisma';
+import { initBot } from './services/telegram.service';
 
 dotenv.config();
 
@@ -24,4 +25,5 @@ app.listen(PORT, () => {
 });
 
 bot.start();
+initBot(bot);
 prisma.$connect();

@@ -55,6 +55,9 @@ export async function getNewFlats() {
           .map((color) => subwayColors[color])
           .join('');
       }
+
+      const subscribers = await prisma.subscriber.findMany();
+
       const text = [
         `[${title}](${url}) [[${host.split('.')[0]}]]\n`,
         `${colors} ${subway}`,
@@ -63,7 +66,11 @@ export async function getNewFlats() {
         `*${formatPrice(price, ' руб')}*`,
         `${comission}`,
       ].join('\n');
-      await bot.api.sendPhoto(process.env.TELEGRAM_ID as string, img, { parse_mode: 'Markdown', caption: text });
+
+      for (const subscriber of subscribers) {
+        const { telegramId } = subscriber;
+        await bot.api.sendPhoto(telegramId, img, { parse_mode: 'Markdown', caption: text });
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

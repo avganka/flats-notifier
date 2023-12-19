@@ -93,35 +93,6 @@ export abstract class ScrapeService {
     }
   }
 
-  //protected getRandomDistance(min: number, max: number) {
-  //  const rand = min + Math.random() * (max + 1 - min);
-  //  return Math.floor(rand);
-  //}
-
-  //protected async autoScroll(maxScrolls: number = 50) {
-  //  if (this.page) {
-  //    // eslint-disable-next-line @typescript-eslint/no-shadow
-  //    await this.page.evaluate(async (maxScrolls: number) => {
-  //      await new Promise<void>((resolve) => {
-  //        let totalHeight = 0;
-  //        const distance = 500;
-  //        let scrolls = 0;
-  //        const timer = setInterval(() => {
-  //          const scrollHeight = document.body.scrollHeight;
-  //          window.scrollBy(0, distance);
-  //          totalHeight = totalHeight + distance;
-  //          scrolls = scrolls + 1;
-
-  //          if (totalHeight >= scrollHeight - window.innerHeight || scrolls >= maxScrolls) {
-  //            clearInterval(timer);
-  //            resolve();
-  //          }
-  //        }, 100);
-  //      });
-  //    }, maxScrolls);
-  //  }
-  //}
-
   protected async closeBrowser() {
     if (this.browser) {
       await this.browser.close();
@@ -160,7 +131,7 @@ export abstract class ScrapeService {
       const price = this.getPrice(el);
       const comission = this.getComission(el);
 
-      if (id) {
+      if (id && img) {
         data.push({
           id,
           host: this.host,
@@ -187,8 +158,6 @@ export abstract class ScrapeService {
       await this.page.goto(url, {
         waitUntil: 'domcontentloaded',
       });
-
-      //await this.autoScroll();
 
       return await this.page.evaluate(() => document.body?.outerHTML);
     } catch (error) {

@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { FlatWithoutTimestamps } from '../core/scraper';
 import { bot } from '../core/telegram';
 import { prisma } from '../core/prisma';
 import { AVITO_URL } from '../core/urls';
-import { formatPrice } from '../utils/scrape';
-import { isSubwayColor, metroStations, subwayColors } from '../core/subway';
 import { AvitoScrapperService } from './avito.service';
+import { Subscriber } from '@prisma/client';
+import { sendFlats } from '../services/telegram.service';
 
 export async function getNewFlats() {
   const avitoScrapeService = new AvitoScrapperService({
@@ -44,38 +42,9 @@ export async function getNewFlats() {
     }
   }
 
+  const subscribers: Subscriber[] = await prisma.subscriber.findMany();
+
   for (const flat of diff) {
-    try {
-      const { title, url, subway, img, timeToSubway, comission, address, price, host } = flat;
-      let colors = '';
-      const colorsText = metroStations.find((station) => station.name === subway);
-      if (colorsText) {
-        colors = colorsText.color
-          .filter(isSubwayColor)
-          .map((color) => subwayColors[color])
-          .join('');
-      }
-
-      const subscribers = await prisma.subscriber.findMany();
-
-      const text = [
-        `[${title}](${url}) [[${host.split('.')[0]}]]\n`,
-        `${colors} ${subway}`,
-        `🚶🏼‍♂️ ${timeToSubway}`,
-        `📍 ${address}\n`,
-        `*${formatPrice(price, ' руб')}*`,
-        `${comission}`,
-      ].join('\n');
-
-      for (const subscriber of subscribers) {
-        const { telegramId } = subscriber;
-        await bot.api.sendPhoto(telegramId, img, { parse_mode: 'Markdown', caption: text });
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-      throw new Error('Неизвестная ошибка');
-    }
+    await sendFlats(bot, subscribers, flat);
   }
 }
